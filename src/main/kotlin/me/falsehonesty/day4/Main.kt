@@ -35,7 +35,7 @@ fun main() {
             }
             split[2] == "falls" -> currentSleep = AOCDate(month, day, minutes, 0)
             split[2] == "wakes" -> {
-                currentSleep?.copy(minuteEnd = minutes)?.let { it1 -> currentGuard?.sleepTimes?.add(it1) }
+                currentSleep?.copy(minuteEnd = minutes - 1)?.let { it1 -> currentGuard?.sleepTimes?.add(it1) }
                 currentSleep = null
             }
         }
@@ -47,14 +47,15 @@ fun main() {
         }
     }
 
-    println(sleepiest)
-
     val flat = sleepiest!!.sleepTimes.map { (it.minuteStart..it.minuteEnd).toList() }.flatten().eachCount()
-    println(flat)
     val sleepiestTime = flat.maxBy { it.value }
-    println(sleepiestTime!!.key)
-    println(sleepiest.id)
-    println(sleepiestTime.key * sleepiest.id)
+    println(sleepiestTime!!.key * sleepiest.id)
+
+    val sleepiest2 = guards.maxBy {
+        it.sleepTimes.map { (it.minuteStart..it.minuteEnd).toList() }.flatten().eachCount().maxBy { it.value }?.value ?: -1
+    }
+
+    println(sleepiest2!!.id * sleepiest2.sleepTimes.map { (it.minuteStart..it.minuteEnd).toList() }.flatten().eachCount().maxBy { it.value }!!.key)
 }
 
 data class Guard(val sleepTimes: MutableList<AOCDate>, val id: Int)
