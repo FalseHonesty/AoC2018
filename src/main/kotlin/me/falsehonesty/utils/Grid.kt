@@ -8,6 +8,10 @@ class Grid<T>(private val size: Int) {
         return content[cursor.first, cursor.second].value
     }
 
+    operator fun get(i: Int, j: Int): T? {
+        return content[i][j].value
+    }
+
     fun moveCursor(dir: Direction, moveToBlanks: Boolean = false) {
         val oldCursor = cursor
         val newCursor = Coord(cursor.first + dir.dx, cursor.second + dir.dy)
