@@ -2,6 +2,12 @@ package me.falsehonesty.utils
 
 typealias Coord = Pair<Int, Int>
 
+data class XY(val x: Int, val y: Int) {
+    fun off(x: Int = 0, y: Int = 0): XY {
+        return XY(this.x + x, this.y + y)
+    }
+}
+
 fun Int.exceeds(max: Int, min: Int = 0): Boolean {
     return this < min || this > max
 }
