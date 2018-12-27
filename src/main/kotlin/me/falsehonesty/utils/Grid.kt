@@ -36,16 +36,32 @@ class Grid<T>(private val size: Int) {
     fun setCursor(x: Int, y: Int) = this.setCursor(Coord(x, y))
 
     class Node<T>(val value: T? = null)
+}
 
-    enum class Direction(val dx: Int, val dy: Int) {
-        UP(0, -1),
-        DOWN(0, 1),
-        LEFT(-1, 0),
-        RIGHT(1, 0),
+enum class Direction(val dx: Int, val dy: Int) {
+    UP(0, -1),
+    RIGHT(1, 0),
+    DOWN(0, 1),
+    LEFT(-1, 0);
 
-        UP_RIGHT(1, -1),
-        DOWN_RIGHT(1, 1),
-        DOWN_LEFT(-1, 1),
-        UP_LEFT(-1, -1)
+    /*UP_RIGHT(1, -1),
+    DOWN_RIGHT(1, 1),
+    DOWN_LEFT(-1, 1),
+    UP_LEFT(-1, -1);*/
+
+    fun turnLeft(): Direction {
+        return if (this.ordinal == 0) {
+            Direction.values().last()
+        } else {
+            Direction.values()[this.ordinal - 1]
+        }
+    }
+
+    fun turnRight(): Direction {
+        return if (this.ordinal == Direction.values().size - 1) {
+            Direction.values().first()
+        } else {
+            Direction.values()[this.ordinal + 1]
+        }
     }
 }
